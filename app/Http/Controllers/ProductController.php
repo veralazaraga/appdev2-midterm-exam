@@ -2,27 +2,72 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Product;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
     public function index()
     {
-        return 'list';
+        return Product::get();
     }
 
-    public function show()
+    public function store(Request $request)
     {
-        return 'show';
+        Product::create([
+            'name' => $request->name,
+            'description' => $request->description,
+            'price' => $request->price,
+        ]);
+        
+        return [
+            'message' => 'Added Successfully'
+        ];
     }
 
-    public function update()
+    public function show($id)
     {
-        return 'update';
+        $product = Product::find($id);
+
+        if(!$product) {
+            return [
+                'message' => 'Product Not Found'
+            ];
+        }
+        return $product;
     }
 
-    public function delete()
+    public function update(Request $request, $id)
     {
+        $product = Product::find($id);
+
+        if(!$product) {
+            return [
+                'message' => 'Product Not Found'
+            ];
+        }
+        
+        $product->name = $request->name;
+        $product->description = $request->description;
+        $product->price = $request->price;
+
+        return [
+            'message' => 'Updated Successfully'
+        ];
+    }
+
+    public function delete($id)
+    {
+        $product = Product::find($id);
+
+        if(!$product) {
+            return [
+                'message' => 'Product Not Found'
+            ];
+        }
+
+        $product->delete();
+
         return 'delete';
     }
 }
