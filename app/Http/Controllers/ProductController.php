@@ -32,9 +32,9 @@ class ProductController extends Controller
         $product = Product::find($id);
 
         if(!$product) {
-            return [
+            return response()->json([
                 'message' => 'Product Not Found'
-            ];
+            ]);
         }
 
         return response()->json([
@@ -47,9 +47,9 @@ class ProductController extends Controller
         $product = Product::find($id);
 
         if(!$product) {
-            return [
+            return response()->json([
                 'message' => 'Product Not Found'
-            ];
+            ]);
         }
         
         $product->name = $request->name;
@@ -66,9 +66,9 @@ class ProductController extends Controller
         $product = Product::find($id);
 
         if(!$product) {
-            return [
+            return response()->json([
                 'message' => 'Product Not Found'
-            ];
+            ]);
         }
 
         $product->delete();
