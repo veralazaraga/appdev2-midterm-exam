@@ -9,7 +9,9 @@ class ProductController extends Controller
 {
     public function index()
     {
-        return Product::get();
+        return response()->json([
+            'data' => Product::get()
+        ]);
     }
 
     public function store(Request $request)
@@ -20,9 +22,9 @@ class ProductController extends Controller
             'price' => $request->price,
         ]);
         
-        return [
+        return response()->json([
             'message' => 'Added Successfully'
-        ];
+        ]);
     }
 
     public function show($id)
@@ -34,7 +36,10 @@ class ProductController extends Controller
                 'message' => 'Product Not Found'
             ];
         }
-        return $product;
+
+        return response()->json([
+            'data' => $product
+        ]);
     }
 
     public function update(Request $request, $id)
@@ -51,9 +56,9 @@ class ProductController extends Controller
         $product->description = $request->description;
         $product->price = $request->price;
 
-        return [
+        return response()->json([
             'message' => 'Updated Successfully'
-        ];
+        ]);
     }
 
     public function delete($id)
@@ -68,7 +73,9 @@ class ProductController extends Controller
 
         $product->delete();
 
-        return 'delete';
+        return response()->json([
+            'message' => 'Deleted Successfully'
+        ]);
     }
 }
 
