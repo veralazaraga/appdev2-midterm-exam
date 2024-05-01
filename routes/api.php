@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\UploadFileController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -19,12 +20,16 @@ use Illuminate\Support\Facades\Route;
 //     return $request->user();
 // });
 
-Route::get('products', [ProductController::class, 'index']);
-Route::get('products/{id}', [ProductController::class, 'show']);
+Route::get('products', [ProductController::class, 'index'])->name('products.index');
+Route::get('products/{id}', [ProductController::class, 'show'])->name('products.show');
 
 
 Route::group(['middleware' => 'checkToken'], function () {
-    Route::post('products', [ProductController::class, 'store']);
-    Route::put('products/{id}', [ProductController::class, 'update']);
-    Route::delete('products/{id}', [ProductController::class, 'delete']);
+    Route::post('products', [ProductController::class, 'store'])->name('products.store');
+    Route::put('products/{id}', [ProductController::class, 'update'])->name('products.update');
+    Route::delete('products/{id}', [ProductController::class, 'delete'])->name('products.delete');
 });
+
+Route::post('products/upload/local', [UploadFileController::class, 'uploadLocal'])->name('upload.local');
+Route::post('products/upload/public', [UploadFileController::class, 'uploadPublic'])->name('upload.public');
+
